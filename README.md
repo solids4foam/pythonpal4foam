@@ -2,9 +2,9 @@
 
 ### What is this? ###
 
-This section contains OpenFOAM code and tutorials that show how to use Python interpreters to interact with OpenFOAM via pythonPal. pythonPal offers Python support and interoperability between the C++/Python data based on the pybind11 library [1]. The code in this repository is based on OpenFOAM-9, however, as noted below, the procedures are expected to compile with similar versions and forks of OpenFOAM.
+This repository contains OpenFOAM code and tutorials that show how to use Python interpreters to interact with OpenFOAM via pythonPal. pythonPal offers Python support and interoperability between the C++/Python data based on the pybind11 library [1]. The code in this repository is based on OpenFOAM-9, however, as noted below, the procedures are expected to compile with similar versions and forks of OpenFOAM.
 
-### [Manual approach] How do I get set up? ###
+### How do I get set up? ###
 
 In addition to an installation of OpenFOAM-9, a Python installation is required. The following libraries are required to run the tutorials:
 
@@ -33,13 +33,13 @@ Once those environment variables have been defined, the OpenFOAM code included i
 
     ./Allwmake
 
-If the Allwmake script gives the error “libpython or lpython not found” then please manually update the LD_LIBRARY_PATH environment variable with "export LD_LIBRARY_PATH=$PYBIND11_LIB_DIR:$LD_LIBRARY_PATH” and run the “./Allwmake” command again.
+If the Allwmake script gives the error “libpython or lpython not found”, then please manually update the LD_LIBRARY_PATH environment variable with "export LD_LIBRARY_PATH=$PYBIND11_LIB_DIR:$LD_LIBRARY_PATH” and run the “./Allwmake” command again.
 
 This will install:
 
 **./applications/solvers/**:
 
-* pythonPalIcoFoam: This is a version of icoFoam that, once the simulation has converged, passes the velocity field to Python where the specific kinetic energy (k) is calculated. Then, OpenFOAM prints the k field.
+* pythonPalIcoFoam: This is a version of icoFoam that, once the simulation has converged, passes the velocity field to Python, where the specific kinetic energy (k) is calculated. Then, OpenFOAM prints the k field.
 
 ### How do I run the cases? ###
 
@@ -66,7 +66,7 @@ If desired, the user can make the small changes required to get the cases to wor
     Simon Rodriguez
     simon.rodriguezluzardo@ucdconnect.ie
     https://www.linkedin.com/in/simonrodriguezl/
-
+    
     Philip Cardiff
     philip.cardiff@ucd.ie
     https://www.linkedin.com/in/philipcardiff/
