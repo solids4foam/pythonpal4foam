@@ -109,6 +109,24 @@ public:
 
     // Member Functions
 
+        //- Pass OpenFOAM variable (string or number) by reference to Python
+        template<class T>
+        void passVariableToPython
+        (
+            T variable, const std::string& variableNameInPython
+        ) const
+        {
+
+            scope_["name"] = variableNameInPython;
+
+            scope_["variable"] = variable;
+            
+            py::exec
+            (
+                "exec(name + ' = variable')", scope_
+            );
+        }
+
         //- Pass OpenFOAM List/Field by reference to Python
         template<class T>
         void passToPython
