@@ -148,6 +148,10 @@ int main(int argc, char *argv[])
         }
     }
 
+    myPythonPal.passVariableToPython(2., "name");
+
+    myPythonPal.execute("print(name)");
+
     k.write();
 
     return 0;
