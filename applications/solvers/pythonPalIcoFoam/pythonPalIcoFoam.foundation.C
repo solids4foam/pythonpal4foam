@@ -148,11 +148,24 @@ int main(int argc, char *argv[])
         }
     }
 
-    myPythonPal.passVariableToPython(2., "name");
-
-    myPythonPal.execute("print(name)");
+    // myPythonPal.execute("print(name)");
 
     k.write();
+
+    //Test passVariableToPython 
+    word country = "Venezuela y Guayana";
+
+    // Info << country << endl;
+
+    // myPythonPal.passVariableToPython(country, "countryInPython");
+
+    // std::string* countryPtr = & country;
+
+    myPythonPal.passWordToPython(country, "countryInPython"); 
+
+    // Info << endl << *countryPtr << endl;
+
+
 
     return 0;
 }

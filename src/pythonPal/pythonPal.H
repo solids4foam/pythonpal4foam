@@ -109,25 +109,52 @@ public:
 
     // Member Functions
 
-        //- Pass OpenFOAM variable (string or number) by reference to Python
+        //- Pass OpenFOAM variable (string or number) to Python
         template<class T>
-        void passVariableToPython
+        void passWordToPython
         (
             T variable, const std::string& variableNameInPython
         ) const
         {
 
+            // Variable can be either a word or a std::string
+            std::string* variablePtr = &variable;
+
+            scope_["variable"] = *variablePtr;
+
             scope_["name"] = variableNameInPython;
 
-            scope_["variable"] = variable;
-            
             py::exec
             (
-                "exec(name + ' = variable')", scope_
+                "exec(name + ' = variable') ",
+                scope_
             );
+
         }
 
-        //- Pass OpenFOAM List/Field by reference to Python
+        // //- Pass OpenFOAM variable (string or number) to Python
+        // template<class T>
+        // void passVariableToPython
+        // (
+        //     T variable, const std::string& variableNameInPython
+        // ) const
+        // {
+
+        //     scope_["name"] = variableNameInPython;
+
+        //     //variable can be either a Foam:: word or a std::string
+        //     scope_["variable"] = variable;
+            
+        //     py::exec
+        //     (
+        //         "exec(name + ' = variable') ",
+        //         scope_
+        //     );
+
+        //     // py:: exec("print(variable)", scope_);
+        // }
+
+        //- Pass OpenFOAM List/Field to Python
         template<class T>
         void passToPython
         (
