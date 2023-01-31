@@ -152,19 +152,51 @@ int main(int argc, char *argv[])
 
     k.write();
 
-    //Test passVariableToPython 
-    word country = "Venezuela y Guayana";
 
-    // Info << country << endl;
+    //Next, we test the additional methods in pythonPal4foam
 
-    // myPythonPal.passVariableToPython(country, "countryInPython");
+    // ***************************************************************
+    // 1. Test for the passWordToPython method
+    word message = "Thank you for using pythonPal4foam";
 
-    // std::string* countryPtr = & country;
+    // Pass the name of a message, given by a Foam::word, to Python
+    myPythonPal.passWordToPython(message, "messageInPython"); 
+    // Now, a variable "messageInPython" exists in Python 
+    // ***************************************************************
 
-    myPythonPal.passWordToPython(country, "countryInPython"); 
+    // ***************************************************************
+    // 2. Test for the retrieveWordFromPython method. 
+    //Declare a Foam:: word
+    word result;
 
-    // Info << endl << *countryPtr << endl;
+    // Retrieve whatever is saved in the "messageInPython" variable in Python
+    result = myPythonPal.retrieveWordFromPython("messageInPython");
 
+    //Print it to check it is what is expected
+    Info << endl << "result is: " << result << endl;
+
+    // 2.1. Modify the variable "messageInPython" via PythonPal
+    myPythonPal.execute("messageInPython += '. We hope it has been useful.' ");
+
+    // Print countryInPython
+    myPythonPal.execute("print(messageInPython)");
+    // ***************************************************************
+
+    // ***************************************************************
+    // 3. Test for the passScalarToPython method
+    // Pass both a scalar and the name it will have in Python, to Python
+    myPythonPal.passScalarToPython(2.0, "numberDevelopers"); 
+    // Now, a variable "numberDevelopers" exists in Python 
+    // ***************************************************************
+
+    // ***************************************************************
+    // 4. Test for the retrieveScalarToPython method
+    // Retrieve whatever is saved in the "numberTeams" variable in Python
+    scalar totalDevelopers = myPythonPal.retrieveScalarFromPython("numberDevelopers");
+
+    InfoIn("retrieveScalarFromPython(...)")
+    << "Total number of developers in pythonPal4Foam team is " << totalDevelopers << endl;
+    // ***************************************************************
 
 
     return 0;

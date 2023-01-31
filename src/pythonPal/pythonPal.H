@@ -109,19 +109,20 @@ public:
 
     // Member Functions
 
-        //- Pass OpenFOAM variable (string or number) to Python
-        template<class T>
+        //- Pass a Foam::word or std::string in OpenFOAM to Python
+        template<class T> //T can be either std::string or Foam::word
         void passWordToPython
         (
             T variable, const std::string& variableNameInPython
         ) const
         {
-
             // Variable can be either a word or a std::string
             std::string* variablePtr = &variable;
 
+            //"variable" is a reserved word in pythonPal
             scope_["variable"] = *variablePtr;
 
+            //"name" is a reserved word in pythonPal
             scope_["name"] = variableNameInPython;
 
             py::exec
@@ -130,29 +131,65 @@ public:
                 scope_
             );
 
+            py::exec
+            (
+                "del name", scope_
+            );
+            
         }
 
-        // //- Pass OpenFOAM variable (string or number) to Python
-        // template<class T>
-        // void passVariableToPython
-        // (
-        //     T variable, const std::string& variableNameInPython
-        // ) const
-        // {
+        //- Retrieve string in Python from OpenFOAM
+        word retrieveWordFromPython
+        (
+            const std::string& variableNameInPython
+        ) const
+        {
+            py::str temp = variableNameInPython;
 
-        //     scope_["name"] = variableNameInPython;
+            // Retrieve the word from Python side
+            std::string result = scope_[temp].cast<std::string>();
 
-        //     //variable can be either a Foam:: word or a std::string
-        //     scope_["variable"] = variable;
+            // Ensure the string is a Foam::word
+            word wordFromPython = result;
+
+            return wordFromPython;
+
+        }
+
+        //- Pass a scalar in OpenFOAM to Python and stores it with the 
+        //  name scalarNameInPython
+        void passScalarToPython
+        (
+            scalar number, const std::string& scalarNameInPython
+        ) const
+        {
+            //Wrap the name in a Python-compatible type
+            py::str temp = scalarNameInPython;
             
-        //     py::exec
-        //     (
-        //         "exec(name + ' = variable') ",
-        //         scope_
-        //     );
+            //Wrap the number in a Python-compatible type
+            py::float_ tempNumber = py::cast(number);
+            
+            scope_[temp] = tempNumber;
+            
+        }
 
-        //     // py:: exec("print(variable)", scope_);
-        // }
+        //- Retrieve string in Python from OpenFOAM
+        scalar retrieveScalarFromPython
+        (
+            const std::string& variableNameInPython
+        ) const
+        {
+            py::str temp = variableNameInPython;
+
+            // Retrieve the word from Python side
+            double result = scope_[temp].cast<double>();
+
+            // Ensure the string is a Foam::word
+            scalar scalarFromPython = result;
+
+            return scalarFromPython;
+
+        }
 
         //- Pass OpenFOAM List/Field to Python
         template<class T>
