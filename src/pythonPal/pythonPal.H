@@ -1,18 +1,18 @@
 /* License
     This program is part of pythonPal4Foam.
 
-    This program is free software: you can redistribute it and/or modify 
-    it under the terms of the GNU General Public License as published 
-    by the Free Software Foundation, either version 3 of the License, 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published
+    by the Free Software Foundation, either version 3 of the License,
     or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, 
-    but WITHOUT ANY WARRANTY; without even the implied warranty of 
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    See the GNU General Public License for more details. You should have 
-    received a copy of the GNU General Public License along with this 
-    program. If not, see <https://www.gnu.org/licenses/>. 
+    See the GNU General Public License for more details. You should have
+    received a copy of the GNU General Public License along with this
+    program. If not, see <https://www.gnu.org/licenses/>.
 
    Authors
     Simon A. Rodriguez, UCD. All rights reserved
@@ -36,7 +36,8 @@ namespace py = pybind11;
 
 namespace Foam
 {
-/*---------------------------------------------------------------------------* \                                                                                                                                                   Class pythonPal Declaration
+/*---------------------------------------------------------------------------*\
+                           Class pythonPal Declaration
 \*---------------------------------------------------------------------------*/
 
 class pythonPal
@@ -70,7 +71,7 @@ public:
                 if (debug_)
                 {
                     InfoIn("pythonPal(...)")
-                        << "Initialising Python interpretor" << endl; 
+                        << "Initialising Python interpretor" << endl;
                 }
                 py::initialize_interpreter();
             }
@@ -79,7 +80,7 @@ public:
             if (debug_)
             {
                 InfoIn("pythonPal(...)")
-                    << "Creating Python scope" << endl; 
+                    << "Creating Python scope" << endl;
             }
             scope_ = py::module_::import("__main__").attr("__dict__");
 
@@ -110,10 +111,11 @@ public:
     // Member Functions
 
         //- Pass a Foam::word or std::string in OpenFOAM to Python
-        template<class T> //T can be either std::string or Foam::word
+        //  T can be either std::string or Foam::word
+        template<class T>
         void passWordToPython
         (
-            T variable, const std::string& variableNameInPython
+            T& variable, const std::string& variableNameInPython
         ) const
         {
             // Variable can be either a word or a std::string
@@ -135,7 +137,7 @@ public:
             (
                 "del name", scope_
             );
-            
+
         }
 
         //- Retrieve string in Python from OpenFOAM
@@ -156,21 +158,21 @@ public:
 
         }
 
-        //- Pass a scalar in OpenFOAM to Python and stores it with the 
+        //- Pass a scalar in OpenFOAM to Python and stores it with the
         //  name scalarNameInPython
         void passScalarToPython
         (
-            scalar number, const std::string& scalarNameInPython
+            const scalar number, const std::string& scalarNameInPython
         ) const
         {
-            //Wrap the name in a Python-compatible type
+            // Wrap the name in a Python-compatible type
             py::str temp = scalarNameInPython;
-            
-            //Wrap the number in a Python-compatible type
+
+            // Wrap the number in a Python-compatible type
             py::float_ tempNumber = py::cast(number);
-            
+
             scope_[temp] = tempNumber;
-            
+
         }
 
         //- Retrieve string in Python from OpenFOAM
