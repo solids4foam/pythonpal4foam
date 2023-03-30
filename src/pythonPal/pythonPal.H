@@ -110,7 +110,7 @@ public:
 
     // Member Functions
 
-        //- Pass a Foam::word or std::string in OpenFOAM to Python
+        //- Pass-by-copy a Foam::word or std::string in OpenFOAM to Python
         //  T can be either std::string or Foam::word
         template<class T>
         void passWordToPython
@@ -140,7 +140,7 @@ public:
 
         }
 
-        //- Retrieve string in Python from OpenFOAM
+        //- Retrieve-by-copy string in Python from OpenFOAM
         word retrieveWordFromPython
         (
             const std::string& variableNameInPython
@@ -158,7 +158,7 @@ public:
 
         }
 
-        //- Pass a scalar in OpenFOAM to Python and stores it with the
+        //- Pass-by-copy a scalar in OpenFOAM to Python and stores it with the
         //  name scalarNameInPython
         void passScalarToPython
         (
@@ -175,7 +175,7 @@ public:
 
         }
 
-        //- Retrieve string in Python from OpenFOAM
+        //- Retrieve-by-copy a string in Python from OpenFOAM
         scalar retrieveScalarFromPython
         (
             const std::string& variableNameInPython
@@ -193,7 +193,7 @@ public:
 
         }
 
-        //- Pass OpenFOAM List/Field to Python
+        //- Pass-by-reference OpenFOAM List/Field to Python
         template<class T>
         void passToPython
         (
