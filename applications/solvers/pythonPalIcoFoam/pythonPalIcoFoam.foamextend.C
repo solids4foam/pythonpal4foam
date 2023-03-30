@@ -175,14 +175,19 @@ int main(int argc, char *argv[])
     // 2.1. Modify the variable "messageInPython" via PythonPal
     myPythonPal.execute("messageInPython += '. We hope it has been useful.' ");
 
-    // Print countryInPython
+    // Print messageInPython using Python "print" function
     myPythonPal.execute("print(messageInPython)");
     // ***************************************************************
 
     // ***************************************************************
     // 3. Test for the passScalarToPython method
     // Pass both a scalar and the name it will have in Python, to Python
+    float number1 = 1.0;
+    double number4 = 4.0;
+
     myPythonPal.passScalarToPython(2.0, "numberDevelopers"); 
+    myPythonPal.passScalarToPython(number1, "number1InPython"); 
+    myPythonPal.passScalarToPython(number4, "number4InPython"); 
     // Now, a variable "numberDevelopers" exists in Python 
     // ***************************************************************
 
@@ -193,6 +198,20 @@ int main(int argc, char *argv[])
 
     InfoIn("retrieveScalarFromPython(...)")
     << "Total number of developers in pythonPal4Foam team is " << totalDevelopers << endl;
+    
+    // Retrieve what is saved in the "number1InPython" variable in Python
+    scalar number1FromPython = myPythonPal.retrieveScalarFromPython("number1InPython");
+
+    // Print number1FromPython
+    InfoIn("retrieveScalarFromPython(...)")
+    << "number1InPython is " << number1FromPython << endl;
+    
+    // Retrieve what is saved in the "number4InPython" variable in Python
+    scalar number4FromPython = myPythonPal.retrieveScalarFromPython("number4InPython");
+
+    // Print number4FromPython
+    InfoIn("retrieveScalarFromPython(...)")
+    << "number4InPython is " << number4FromPython << endl;
     // ***************************************************************
 
     return 0;
