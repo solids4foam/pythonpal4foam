@@ -152,9 +152,7 @@ int main(int argc, char *argv[])
 
     k.write();
 
-
-    //Next, we test the additional methods in pythonPal4foam
-
+    // Next, we test the additional methods in pythonPal4foam
     // ***************************************************************
     // 1. Test for the passWordToPython method
     word message = "Thank you for using pythonPal4foam";
@@ -176,7 +174,7 @@ int main(int argc, char *argv[])
     Info << endl << "result is: " << result << endl;
 
     // 2.1. Modify the variable "messageInPython" via PythonPal
-    myPythonPal.execute("messageInPython += '. We hope it has been useful.' ");
+    myPythonPal.execute("messageInPython += '. We hope it has been useful.'");
 
     // Print messageInPython using Python "print" function
     myPythonPal.execute("print(messageInPython)");
@@ -197,25 +195,29 @@ int main(int argc, char *argv[])
     // ***************************************************************
     // 4. Test for the retrieveScalarToPython method
     // Retrieve what is saved in the "numberDevelopers" variable in Python
-    scalar totalDevelopers = myPythonPal.retrieveScalarFromPython("numberDevelopers");
+    scalar totalDevelopers = 
+        myPythonPal.retrieveScalarFromPython("numberDevelopers");
 
     // Print numberDevelopers
     InfoIn("retrieveScalarFromPython(...)")
-    << "Total number of developers in pythonPal4Foam team is " << totalDevelopers << endl;
+        << "Total number of developers in pythonPal4Foam team is " 
+        << totalDevelopers << endl;
     
     // Retrieve what is saved in the "number1InPython" variable in Python
-    scalar number1FromPython = myPythonPal.retrieveScalarFromPython("number1InPython");
+    scalar number1FromPython = 
+        myPythonPal.retrieveScalarFromPython("number1InPython");
 
     // Print number1FromPython
     InfoIn("retrieveScalarFromPython(...)")
-    << "number1InPython is " << number1FromPython << endl;
+        << "number1InPython is " << number1FromPython << endl;
     
     // Retrieve what is saved in the "number4InPython" variable in Python
-    scalar number4FromPython = myPythonPal.retrieveScalarFromPython("number4InPython");
+    scalar number4FromPython = 
+        myPythonPal.retrieveScalarFromPython("number4InPython");
 
     // Print number4FromPython
     InfoIn("retrieveScalarFromPython(...)")
-    << "number4InPython is " << number4FromPython << endl;    
+        << "number4InPython is " << number4FromPython << endl;    
     // ***************************************************************
 
     return 0;
